@@ -24,12 +24,14 @@ $(window).on('load', () => {
 				} else alert("Error! localStorage is not available.");
 			});
 			
-			/**
+			
 			if(localStorage){
 				alert("Planets data has been parsed!");
-			}**/
+			}
 			
 			displayMainPage();
+			
+			
 			
 			
 		}
