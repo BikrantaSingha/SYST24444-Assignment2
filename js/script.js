@@ -10,7 +10,6 @@ $(window).on('load', () => {
 		crossDomain: true,
 		success: (data) => {
 			let planets = data['solarSystem']['planets'];
-			console.log(planets);
 			planets.forEach((elem, index) => {
 				let planet = new Planet(elem['planetName'], 
 					elem['planetColor'],
@@ -20,14 +19,32 @@ $(window).on('load', () => {
 					elem['image'],
 					index + 1
 				);
-				console.log(elem['planetName']);
-				
 				if (localStorage) {
-					localStorage.setItem(elem['planetName'], planet);
+					localStorage.setItem(elem['planetName'], JSON.stringify(planet));
+					let temp = localStorage.getItem(elem['planetName']);
+					console.log(JSON.parse(temp));
 										
 				} else alert("Error! localStorage is not available.");
 			});
-				
+			
+			/**
+			if(localStorage){
+				alert("Planets data has been parsed!");
+			}**/
+			
+			$('div#content').html(
+				"<ul>"+
+					"<li id='Mercury'> Mercury <img src='images/"+JSON.parse(localStorage.getItem('Mercury'))._img+"'/></li>"+
+					"<li id='Venus'> Venus <img src='images/"+JSON.parse(localStorage.getItem('Venus'))._img+"'/></li>"+
+					"<li id='Earth'> Earth <img src='images/"+JSON.parse(localStorage.getItem('Earth'))._img+"'/></li>"+
+					"<li id='Mars'> Mars <img src='images/"+JSON.parse(localStorage.getItem('Mars'))._img+"'/></li>"+
+					"<li id='Jupiter'> Jupiter <img src='images/"+JSON.parse(localStorage.getItem('Jupiter'))._img+"'/></li>"+
+					"<li id='Saturn'> Saturn <img src='images/"+JSON.parse(localStorage.getItem('Saturn'))._img+"'/></li>"+
+					"<li id='Uranus'> Uranus <img src='images/"+JSON.parse(localStorage.getItem('Uranus'))._img+"'/></li>"+
+					"<li id='Neptune'> Neptune <img src='images/"+JSON.parse(localStorage.getItem('Neptune'))._img+"'/></li>"+
+				"</ul>"
+			);
+			
 		}
 	});
 		
@@ -38,75 +55,49 @@ $(window).on('load', () => {
 //Planet class
 
 let Planet = class {
+	
+	
 	constructor(name, color, radius, distSun, distEarth, img, id){
-		this.name = name;
-		this.color = color;
-		this.radius = radius;
-		this.distSun = distSun;
-		this.distEarth = distEarth;
-		this.img = img;
-		this.id = id;
+		this._name = name;
+		this._color = color;
+		this._radius = radius;
+		this._distSun = distSun;
+		this._distEarth = distEarth;
+		this._img = img;
+		this._id = id;
 	}
 	
 	//getters
-	/**
 	get name(){
-		return this.name;
+		return this._name;
 	}
 	
 	get color(){
-		return this.color;
+		return this._color;
 	}
 	
 	get radius(){
-		return this.radius;
+		return this._radius;
 	}
 	
 	get distSun(){
-		return this.distSun;
+		return this._distSun;
 	}
 	
 	get distEarth(){
-		return this.distEarth;
+		return this._distEarth;
 	}
 	
 	get img(){
-		return this.img;
+		return this._img;
 	}
 	
 	get id(){
-		return this.id;
+		return this._id;
 	}
 	
-	//setters
-	set name(newName){
-		this.name = newName;
-	}
 	
-	set color(newColor){
-		this.color = newColor;
-	}
 	
-	set radius(newRadius){
-		this.radius = newRadius;
-	}
-	
-	set distSun(newDist){
-		this.distSun = newDist;
-	}
-	
-	set distEarth(newDist){
-		this.distEarth = newDist;
-	}
-	
-	set img(newImg){
-		this.img = newImg;
-	}
-	
-	set id(newId){
-		this.id = newId;
-	}
-	**/
 	
 	//stringify() method
 	stringify(){
